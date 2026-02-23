@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery - Explore Pakistan</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #046a38;
+      --secondary-color: #01411c;
+      --accent-color: #f8c537;
+      --text-dark: #333;
+      --text-light: #f8f9fa;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* Header Styles */
+    .top-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 1rem 0;
+      position: relative;
+      z-index: 1020;
+    }
+
+    .top-header h1 {
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      letter-spacing: 1px;
+    }
+
+    .top-header p {
+      font-weight: 300;
+      opacity: 0.9;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      background: rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .navbar.scrolled {
+      background: rgba(255, 255, 255, 0.98) !important;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      color: var(--primary-color) !important;
+      font-size: 1.5rem;
+    }
+
+    .nav-link {
+      position: relative;
+      color: var(--text-dark) !important;
+      font-weight: 500;
+      margin: 0 5px;
+      padding: 8px 15px !important;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent-color);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-link:hover::before {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-color) !important;
+    }
+
+    .nav-link.active {
+      color: var(--primary-color) !important;
+      font-weight: 600;
+    }
+
+    .nav-link.active::before {
+      transform: scaleX(1);
+    }
+
+    /* Page Header */
+    .page-header {
+      /* Local Image Path */
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url('images/flag.jpg');
+      background-size: cover;
+      background-position: center;
+      padding: 8rem 0 6rem;
+      color: white;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .page-header h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .page-header p {
+      font-size: 1.5rem;
+      opacity: 0.9;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Gallery Styles */
+    .gallery-container {
+      padding: 3rem 0;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      margin-bottom: 1.5rem;
+      height: 300px;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .gallery-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery-item:hover .gallery-img {
+      transform: scale(1.1);
+    }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+      color: white;
+      padding: 1.5rem 1rem 1rem;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover .gallery-caption {
+      transform: translateY(0);
+    }
+
+    .gallery-caption h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .gallery-caption p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+      opacity: 0.9;
+    }
+
+    /* Filter Buttons */
+    .filter-buttons {
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .filter-btn {
+      background: white;
+      border: 1px solid #ddd;
+      color: var(--text-dark);
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      padding: 3rem 0 1rem;
+      color: white;
+    }
+
+    .footer-content {
+      margin-bottom: 2rem;
+    }
+
+    .footer-links h5 {
+      margin-bottom: 1.2rem;
+      font-weight: 600;
+    }
+
+    .footer-links ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: white;
+      padding-left: 5px;
+    }
+
+    .social-icons a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      margin-right: 10px;
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      background: var(--accent-color);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 1.5rem;
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+      .page-header h1 {
+        font-size: 2.5rem;
+      }
+
+      .page-header p {
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 6rem 0 4rem;
+      }
+
+      .page-header h1 {
+        font-size: 2rem;
+      }
+
+      .gallery-item {
+        height: 250px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="top-header">
+    <div class="container">
+      <h1 class="m-0">Explore Pakistan</h1>
+      <p class="lead m-0">Your Ultimate Travel & Culture Guide</p>
+    </div>
+  </header>
+
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">ExplorePK</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="gallery.html">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link" href="tourism.html">Tourism</a></li>
+          <li class="nav-item"><a class="nav-link" href="culture.html">Culture</a></li>
+          <li class="nav-item"><a class="nav-link" href="food.html">Food</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="provincesDropdown" role="button" data-bs-toggle="dropdown">
+              Provinces
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="sindh.html">Sindh</a></li>
+              <li><a class="dropdown-item" href="punjab.html">Punjab</a></li>
+              <li><a class="dropdown-item" href="kp.html">Khyber Pakhtunkhwa</a></li>
+              <li><a class="dropdown-item" href="balochistan.html">Balochistan</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="history.html">History</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="page-header">
+    <div class="container">
+      <h1>Gallery of Pakistan</h1>
+      <p>A Visual Journey Through Land, Culture, and People</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="filter-buttons">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="punjab">Punjab</button>
+      <button class="filter-btn" data-filter="sindh">Sindh</button>
+      <button class="filter-btn" data-filter="kpk">KPK</button>
+      <button class="filter-btn" data-filter="balochistan">Balochistan</button>
+      <button class="filter-btn" data-filter="gb">Gilgit-Baltistan</button>
+      <button class="filter-btn" data-filter="culture">Culture</button>
+      <button class="filter-btn" data-filter="heritage">Heritage</button>
+    </div>
+  </div>
+
+  <section class="gallery-container">
+    <div class="container">
+      <div class="row g-4" id="gallery-grid">
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="row footer-content">
+        <div class="col-lg-4 mb-4 mb-lg-0">
+          <h5>Explore Pakistan</h5>
+          <p>Your ultimate guide to Pakistan's travel destinations, culture, and heritage.</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+          <div class="footer-links">
+            <h5>Quick Links</h5>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="tourism.html">Destinations</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+          <div class="footer-links">
+            <h5>Explore</h5>
+            <ul>
+              <li><a href="culture.html">Culture</a></li>
+              <li><a href="food.html">Food</a></li>
+              <li><a href="history.html">History</a></li>
+              <li><a href="gallery.html">Gallery</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4">
+          <div class="footer-links">
+            <h5>Newsletter</h5>
+            <p>Subscribe for travel tips and updates</p>
+            <form class="mb-3">
+              <div class="input-group">
+                <input type="email" class="form-control" placeholder="Your email">
+                <button class="btn btn-warning" type="submit">Subscribe</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="copyright">
+        <p class="mb-0">&copy; 2025 Explore Pakistan. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Gallery data with LOCAL IMAGES
+    const galleryItems = [
+      {
+        img: "images/lahorefort.jpg",
+        caption: "Lahore Fort",
+        description: "Historical Mughal fort in Punjab",
+        category: ["punjab", "heritage"]
+      },
+
+      {
+        img: "images/moen.jpg",
+        caption: "Mohenjo-Daro",
+        description: "Ancient Indus Valley city in Sindh",
+        category: ["sindh", "heritage"]
+      },
+
+      {
+        img: "images/quetta.png",
+        caption: "Quetta Hills",
+        description: "Beautiful landscapes in Balochistan",
+        category: ["balochistan"]
+      },
+
+      {
+        img: "images/swat.jpg",
+        caption: "Swat Valley",
+        description: "The Switzerland of Pakistan in KPK",
+        category: ["kpk"]
+      },
+
+      {
+        img: "images/badshahi.jpg",
+        caption: "Badshahi Mosque",
+        description: "Iconic Mughal mosque in Lahore, Punjab",
+        category: ["punjab", "heritage"]
+      },
+
+      {
+        img: "images/faisal.jpg",
+        caption: "Faisal Mosque",
+        description: "Modern mosque in Islamabad",
+        category: ["punjab", "heritage"]
+      },
+
+      {
+        img: "images/manchar.jpg",
+        caption: "Manchar Lake",
+        description: "Largest freshwater lake in Sindh",
+        category: ["sindh"]
+      },
+
+      {
+        img: "images/sea.jpg",
+        caption: "Sea View",
+        description: "Popular beach in Karachi, Sindh",
+        category: ["sindh"]
+      },
+
+      {
+        img: "images/minaaar.jpg",
+        caption: "Minar-e-Pakistan",
+        description: "National monument in Lahore",
+        category: ["punjab", "heritage"]
+      },
+
+      {
+        img: "images/ranikot.jpg",
+        caption: "Ranikot Fort",
+        description: "Great Wall of Sindh",
+        category: ["sindh", "heritage"]
+      },
+
+      {
+        img: "images/hingol.jpg",
+        caption: "Hingol National Park",
+        description: "Beautiful landscapes in Balochistan",
+        category: ["balochistan"]
+      },
+
+      {
+        img: "images/khewra.jpg",
+        caption: "Khewra Salt Mines",
+        description: "Second largest salt mines in Punjab",
+        category: ["punjab"]
+      },
+
+      {
+        img: "images/shahjan.webp",
+        caption: "Shah Jahan Mosque",
+        description: "Historical mosque in Thatta, Sindh",
+        category: ["sindh", "heritage"]
+      },
+
+      {
+        img: "images/kalash.jpg",
+        caption: "Kalash Valley",
+        description: "Unique culture in Chitral, KPK",
+        category: ["kpk", "culture"]
+      },
+
+      {
+        img: "images/islamabad.jpg",
+        caption: "Presidential Palace",
+        description: "Aiwan-e-Sadr in Islamabad",
+        category: ["punjab"]
+      },
+
+      {
+        img: "images/babusar.jpg",
+        caption: "Babusar Top",
+        description: "Mountain pass in KPK",
+        category: ["kpk"]
+      },
+
+      {
+        img: "images/china.jpg",
+        caption: "Pak-China Border",
+        description: "Khunjerab Pass in Gilgit-Baltistan",
+        category: ["gb"]
+      },
+
+      {
+        img: "images/safdar.jpg",
+        caption: "Tomb of Safdar Jang",
+        description: "Historical site in Lahore, Punjab",
+        category: ["punjab", "heritage"]
+      },
+
+      {
+        img: "images/gwader.jpg",
+        caption: "Gwadar Port",
+        description: "Deep sea port in Balochistan",
+        category: ["balochistan"]
+      },
+
+      {
+        img: "images/deosai.jpg",
+        caption: "Deosai National Park",
+        description: "Land of Giants in Gilgit-Baltistan",
+        category: ["gb"]
+      },
+    ];
+
+    // Initialize gallery
+    document.addEventListener("DOMContentLoaded", () => {
+      const galleryGrid = document.getElementById("gallery-grid");
+      const filterButtons = document.querySelectorAll(".filter-btn");
+
+      // Load all gallery items
+      loadGalleryItems(galleryItems);
+
+      // Filter functionality
+      filterButtons.forEach(button => {
+        button.addEventListener("click", () => {
+          // Update active button
+          filterButtons.forEach(btn => btn.classList.remove("active"));
+          button.classList.add("active");
+
+          const filterValue = button.getAttribute("data-filter");
+          if (filterValue === "all") {
+            loadGalleryItems(galleryItems);
+          } else {
+            const filteredItems = galleryItems.filter(item =>
+              item.category.includes(filterValue)
+            );
+            loadGalleryItems(filteredItems);
+          }
+        });
+      });
+
+      // Highlight current page in navbar
+      const current = location.pathname.split("/").pop();
+      document.querySelectorAll(".nav-link").forEach(link => {
+        if (link.getAttribute("href") === current) {
+          link.classList.add("active");
+        }
+      });
+    });
+
+    // Load gallery items function
+    function loadGalleryItems(items) {
+      const galleryGrid = document.getElementById("gallery-grid");
+      galleryGrid.innerHTML = "";
+
+      items.forEach(item => {
+        const col = document.createElement("div");
+        col.className = "col-lg-4 col-md-6";
+        col.innerHTML = `
+          <div class="gallery-item">
+            <img src="${item.img}" alt="${item.caption}" class="gallery-img">
+            <div class="gallery-caption">
+              <h3>${item.caption}</h3>
+              <p>${item.description}</p>
+            </div>
+          </div>
+        `;
+        galleryGrid.appendChild(col);
+      });
+    }
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function () {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+  </script>
+</body>
+
+</html>

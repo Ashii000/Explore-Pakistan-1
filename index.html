@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Explore Pakistan - Travel & Culture Guide</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #046a38;
+      --secondary-color: #01411c;
+      --accent-color: #f8c537;
+      --text-dark: #333;
+      --text-light: #f8f9fa;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* Header Styles */
+    .top-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 1rem 0;
+      position: relative;
+      z-index: 1020;
+    }
+
+    .top-header h1 {
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      letter-spacing: 1px;
+    }
+
+    .top-header p {
+      font-weight: 300;
+      opacity: 0.9;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      background: rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .navbar.scrolled {
+      background: rgba(255, 255, 255, 0.98) !important;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      color: var(--primary-color) !important;
+      font-size: 1.5rem;
+    }
+
+    .nav-link {
+      position: relative;
+      color: var(--text-dark) !important;
+      font-weight: 500;
+      margin: 0 5px;
+      padding: 8px 15px !important;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent-color);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-link:hover::before {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-color) !important;
+    }
+
+    .nav-link.active {
+      color: var(--primary-color) !important;
+      font-weight: 600;
+    }
+
+    .nav-link.active::before {
+      transform: scaleX(1);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      height: 100vh;
+      min-height: 600px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+      color: white;
+      padding-top: 150px;
+    }
+
+    .hero-content h2 {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 1s ease;
+    }
+
+    .hero-content p {
+      font-size: 1.5rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      animation: fadeInUp 1s ease 0.3s forwards;
+      opacity: 0;
+    }
+
+    /* Slideshow Background - LOCAL IMAGES */
+    /* Note: ../ hataya hai kyunki index file root par hai */
+    .slideshow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('images/minar.jpg') center/cover no-repeat;
+      animation: slideshow 20s infinite;
+    }
+
+    /* Sections */
+    section {
+      padding: 5rem 0;
+    }
+
+    .bg-light {
+      background-color: #f9f9f9 !important;
+    }
+
+    /* Cards */
+    .card {
+      border: none;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card-title {
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      padding: 2rem 0;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* SLIDESHOW ANIMATION - LOCAL IMAGES */
+    @keyframes slideshow {
+
+      0%,
+      100% {
+        background-image: url('images/minar.jpg');
+      }
+
+      25% {
+        background-image: url('images/badshahi.jpg');
+      }
+
+      50% {
+        background-image: url('images/hunza.jpg');
+      }
+
+      75% {
+        background-image: url('images/karachi.jpg');
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .hero-content h2 {
+        font-size: 2.5rem;
+      }
+
+      .hero-content p {
+        font-size: 1.2rem;
+      }
+
+      .navbar-collapse {
+        background: rgba(255, 255, 255, 0.98);
+        padding: 1rem;
+        border-radius: 10px;
+        margin-top: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-content h2 {
+        font-size: 2rem;
+      }
+
+      section {
+        padding: 3rem 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="top-header">
+    <div class="container">
+      <h1 class="m-0">Explore Pakistan</h1>
+      <p class="lead m-0">Your Ultimate Travel & Culture Guide</p>
+    </div>
+  </header>
+
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="">ExplorePK</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link" href="tourism.html">Tourism</a></li>
+          <li class="nav-item"><a class="nav-link" href="culture.html">Culture</a></li>
+          <li class="nav-item"><a class="nav-link" href="food.html">Food</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="provincesDropdown" role="button"
+              data-bs-toggle="dropdown">Provinces</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="sindh.html">Sindh</a></li>
+              <li><a class="dropdown-item" href="punjab.html">Punjab</a></li>
+              <li><a class="dropdown-item" href="kp.html">Khyber Pakhtunkhwa</a></li>
+              <li><a class="dropdown-item" href="balochistan.html">Balochistan</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="history.html">History</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero-section">
+    <div class="slideshow"></div>
+    <div class="container hero-content text-center">
+      <h2 class="display-4 fw-bold">Discover the Beauty of Pakistan</h2>
+      <p class="lead mb-4">From mountains to deserts, culture to cuisine – explore it all</p>
+      <div class="d-flex gap-3 justify-content-center">
+        <a href="#destinations" class="btn btn-primary btn-lg px-4 py-2">Explore Destinations</a>
+        <a href="#about" class="btn btn-outline-light btn-lg px-4 py-2">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="py-5 bg-light">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <h2 class="mb-4">Why Visit Pakistan?</h2>
+          <p class="lead">Pakistan is a land of breathtaking beauty, rich heritage, and unmatched hospitality.</p>
+          <p>With stunning mountain ranges, historic landmarks, colorful festivals, and delicious food, Pakistan offers
+            an unforgettable experience for every traveler.</p>
+          <ul class="list-unstyled">
+            <li class="mb-2"><i class="fas fa-mountain me-2 text-primary"></i> Explore historical places like
+              Mohenjo-Daro, Badshahi Mosque, and Rohtas Fort</li>
+            <li class="mb-2"><i class="fas fa-umbrella-beach me-2 text-primary"></i> Enjoy natural beauty in Hunza,
+              Skardu, and Swat Valley</li>
+            <li class="mb-2"><i class="fas fa-hands-helping me-2 text-primary"></i> Experience local hospitality,
+              traditions, and culture</li>
+            <li class="mb-2"><i class="fas fa-utensils me-2 text-primary"></i> Delicious cuisine like Biryani, Karahi,
+              Sajji, Chapli Kebab</li>
+            <li class="mb-2"><i class="fas fa-music me-2 text-primary"></i> Festivals, handicrafts, music and heritage
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-6">
+          <div class="position-relative">
+            <img src="images/hunza.jpg" class="img-fluid rounded shadow-lg" alt="Pakistan Landscape">
+            <div class="position-absolute bottom-0 start-0 bg-primary text-white p-3 rounded-end"
+              style="transform: translateY(50%);">
+              <h5 class="mb-0">#VisitPakistan</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="destinations" class="py-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2>Top Destinations</h2>
+        <p class="lead text-muted">Explore Pakistan's most beautiful places</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="images/badshahi.jpg" class="card-img-top" alt="Badshahi Mosque">
+            <div class="card-body">
+              <h5 class="card-title">Lahore - Badshahi Mosque</h5>
+              <p class="card-text">One of the largest and most beautiful mosques in the world. Built by Mughal Emperor
+                Aurangzeb in 1673.</p>
+              <a href="#" class="btn btn-sm btn-outline-primary">Explore</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="images/hunza.jpg" class="card-img-top" alt="Hunza Valley">
+            <div class="card-body">
+              <h5 class="card-title">Hunza Valley</h5>
+              <p class="card-text">A mountainous region in Gilgit-Baltistan known for peace, scenery, and snow-capped
+                peaks.</p>
+              <a href="#" class="btn btn-sm btn-outline-primary">Explore</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="images/moen.jpg" class="card-img-top" alt="Mohenjo Daro">
+            <div class="card-body">
+              <h5 class="card-title">Mohenjo-Daro</h5>
+              <p class="card-text">Ancient Indus Valley city with advanced drainage and urban planning from 2500 BCE.
+              </p>
+              <a href="#" class="btn btn-sm btn-outline-primary">Explore</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="images/minaaar.jpg" class="card-img-top" alt="Minar-e-Pakistan">
+            <div class="card-body">
+              <h5 class="card-title">Minar-e-Pakistan</h5>
+              <p class="card-text">National monument in Lahore where the Pakistan Resolution was passed on March 23,
+                1940.</p>
+              <a href="#" class="btn btn-sm btn-outline-primary">Explore</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="images/kashmir.jpg" class="card-img-top" alt="Azad Kashmir">
+            <div class="card-body">
+              <h5 class="card-title">Azad Kashmir</h5>
+              <p class="card-text">Lush green valleys, rivers, and mountains. Known as "Heaven on Earth".</p>
+              <a href="#" class="btn btn-sm btn-outline-primary">Explore</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="images/skardu.jpg" class="card-img-top" alt="Skardu Valley">
+            <div class="card-body">
+              <h5 class="card-title">Skardu Valley</h5>
+              <p class="card-text">Located in Gilgit-Baltistan. Gateway to K2, the world's second-highest mountain.</p>
+              <a href="#" class="btn btn-sm btn-outline-primary">Explore</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-5">
+        <a href="tourism.html" class="btn btn-primary px-4 py-2">View All Destinations</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-dark text-white py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-4 mb-md-0">
+          <h5>Explore Pakistan</h5>
+          <p>Your ultimate guide to Pakistan's travel destinations, culture, and heritage.</p>
+          <div class="social-icons">
+            <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-white"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="col-md-2 mb-4 mb-md-0">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="index.html" class="text-white">Home</a></li>
+            <li><a href="about.html" class="text-white">About</a></li>
+            <li><a href="tourism.html" class="text-white">Destinations</a></li>
+            <li><a href="contact.html" class="text-white">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-2 mb-4 mb-md-0">
+          <h5>Explore</h5>
+          <ul class="list-unstyled">
+            <li><a href="culture.html" class="text-white">Culture</a></li>
+            <li><a href="food.html" class="text-white">Food</a></li>
+            <li><a href="history.html" class="text-white">History</a></li>
+            <li><a href="gallery.html" class="text-white">Gallery</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h5>Newsletter</h5>
+          <p>Subscribe for travel tips and updates</p>
+          <form class="mb-3">
+            <div class="input-group">
+              <input type="email" class="form-control" placeholder="Your email">
+              <button class="btn btn-accent" type="submit"
+                style="background-color: var(--accent-color);">Subscribe</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <hr class="my-4">
+      <div class="text-center">
+        <p class="mb-0">&copy; 2025 Explore Pakistan. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', function () {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Highlight current page
+    document.addEventListener("DOMContentLoaded", () => {
+      const current = location.pathname.split("/").pop();
+      document.querySelectorAll(".nav-link").forEach(link => {
+        if (link.getAttribute("href") === current) {
+          link.classList.add("active");
+        }
+      });
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

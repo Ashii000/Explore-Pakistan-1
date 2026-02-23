@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Provinces of Pakistan - Explore Pakistan</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #046a38;
+      /* Pakistan green */
+      --secondary-color: #01411c;
+      --accent-color: #f8c537;
+      /* Golden accent */
+      --text-dark: #333;
+      --text-light: #f8f9fa;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* Header Styles */
+    .top-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 1rem 0;
+      position: relative;
+      z-index: 1020;
+    }
+
+    .top-header h1 {
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      letter-spacing: 1px;
+    }
+
+    .top-header p {
+      font-weight: 300;
+      opacity: 0.9;
+    }
+
+    /* Navbar Styles with Hover Effect */
+    .navbar {
+      background: rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .navbar.scrolled {
+      background: rgba(255, 255, 255, 0.98) !important;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      color: var(--primary-color) !important;
+      font-size: 1.5rem;
+    }
+
+    .nav-link {
+      position: relative;
+      color: var(--text-dark) !important;
+      font-weight: 500;
+      margin: 0 5px;
+      padding: 8px 15px !important;
+      transition: all 0.3s ease;
+    }
+
+    /* Hover Background Effect */
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent-color);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-link:hover::before {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-color) !important;
+    }
+
+    .nav-link.active {
+      color: var(--primary-color) !important;
+      font-weight: 600;
+    }
+
+    .nav-link.active::before {
+      transform: scaleX(1);
+    }
+
+    /* Page Header */
+    .page-header {
+      /* LOCAL PATH */
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url('images/minaaar.jpg');
+      background-size: cover;
+      background-position: center;
+      padding: 8rem 0 6rem;
+      color: white;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .page-header h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .page-header p {
+      font-size: 1.5rem;
+      opacity: 0.9;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Province Sections */
+    .province-section {
+      padding: 5rem 0;
+    }
+
+    .section-title {
+      position: relative;
+      padding-bottom: 1rem;
+      margin-bottom: 2rem;
+      color: var(--primary-color);
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 80px;
+      height: 4px;
+      background: var(--accent-color);
+      border-radius: 2px;
+    }
+
+    .province-card {
+      border: none;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      margin-bottom: 2rem;
+      height: 100%;
+      background: white;
+    }
+
+    .province-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .province-img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .province-card:hover .province-img {
+      transform: scale(1.05);
+    }
+
+    .province-content {
+      padding: 2rem;
+    }
+
+    .province-title {
+      color: var(--primary-color);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .province-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--accent-color);
+    }
+
+    /* Feature Icons */
+    .feature-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--accent-color);
+      color: var(--text-dark);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Province Color Badges */
+    .province-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: white;
+      color: var(--text-dark);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .sindh-badge {
+      background-color: #2e8b57;
+      color: white;
+    }
+
+    .punjab-badge {
+      background-color: #ff0000;
+      color: white;
+    }
+
+    .kpk-badge {
+      background-color: #ffd700;
+      color: var(--text-dark);
+    }
+
+    .balochistan-badge {
+      background-color: #4682b4;
+      color: white;
+    }
+
+    /* Summary Section */
+    .summary-section {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 4rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .summary-section::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+    }
+
+    .summary-section::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      left: -80px;
+      width: 250px;
+      height: 250px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+    }
+
+    .summary-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .summary-content h2 {
+      margin-bottom: 1.5rem;
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      padding: 3rem 0 1rem;
+      color: white;
+    }
+
+    .footer-content {
+      margin-bottom: 2rem;
+    }
+
+    .footer-links h5 {
+      margin-bottom: 1.2rem;
+      font-weight: 600;
+    }
+
+    .footer-links ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: white;
+      padding-left: 5px;
+    }
+
+    .social-icons a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      margin-right: 10px;
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      background: var(--accent-color);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 1.5rem;
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+      .page-header h1 {
+        font-size: 2.5rem;
+      }
+
+      .page-header p {
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 6rem 0 4rem;
+      }
+
+      .page-header h1 {
+        font-size: 2rem;
+      }
+
+      .province-section {
+        padding: 3rem 0;
+      }
+
+      .province-img {
+        height: 250px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="top-header">
+    <div class="container">
+      <h1 class="m-0">Explore Pakistan</h1>
+      <p class="lead m-0">Your Ultimate Travel & Culture Guide</p>
+    </div>
+  </header>
+
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">ExplorePK</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link" href="tourism.html">Tourism</a></li>
+          <li class="nav-item"><a class="nav-link" href="culture.html">Culture</a></li>
+          <li class="nav-item"><a class="nav-link" href="food.html">Food</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="province.html" id="provincesDropdown" role="button"
+              data-bs-toggle="dropdown">
+              Provinces
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="sindh.html">Sindh</a></li>
+              <li><a class="dropdown-item" href="punjab.html">Punjab</a></li>
+              <li><a class="dropdown-item" href="kp.html">Khyber Pakhtunkhwa</a></li>
+              <li><a class="dropdown-item" href="balochistan.html">Balochistan</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="history.html">History</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="page-header">
+    <div class="container">
+      <h1>Provinces of Pakistan</h1>
+      <p>Discover the Unique Character of Each Region</p>
+    </div>
+  </section>
+
+  <section class="province-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center mb-5">
+          <p class="lead">Pakistan is divided into four provinces, each with its own distinct geography, culture, and
+            history. From the fertile plains of Punjab to the rugged mountains of Balochistan, each region contributes
+            uniquely to Pakistan's national identity.</p>
+        </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <div class="province-card">
+            <div class="position-relative">
+              <img src="images/moen.jpg" class="province-img" alt="Sindh">
+              <span class="province-badge sindh-badge">Sindh</span>
+            </div>
+            <div class="province-content">
+              <h3 class="province-title">Sindh – The Land of Civilization</h3>
+              <p>Sindh, located in the southeastern part of Pakistan, is one of the most historically rich provinces in
+                the country. It is famously home to one of the world's oldest civilizations — the Indus Valley
+                Civilization — with Mohenjo-Daro standing as its proud archaeological symbol. The province is a melting
+                pot of cultures, languages, music, and traditions.</p>
+              <div class="row mt-4">
+                <div class="col-4 text-center">
+                  <div class="feature-icon">
+                    <i class="fas fa-history"></i>
+                  </div>
+                  <small>Ancient History</small>
+                </div>
+                <div class="col-4 text-center">
+                  <div class="feature-icon">
+                    <i class="fas fa-water"></i>
+                  </div>
+                  <small>Indus River</small>
+                </div>
+                <div class="col-4 text-center">
+                  <div class="feature-icon">
+                    <i class="fas fa-music"></i>
+                  </div>
+                  <small>Rich Culture</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="province-card">
+            <div class="position-relative">
+              <img src="images/badshahi.jpg" class="province-img" alt="Punjab">
+              <span class="province-badge punjab-badge">Punjab</span>
+            </div>
+            <div class="province-content">
+              <h3 class="province-title">Punjab – Heart of Pakistan</h3>
+              <p>Punjab is the most populous and agriculturally prosperous province of Pakistan. Known as the "Land of
+                Five Rivers," its name comes from the Persian words 'Panj' (five) and 'Aab' (water). These rivers have
+                made the soil of Punjab fertile and ideal for farming, which forms the backbone of Pakistan's economy.
+              </p>
+              <div class="row mt-4">
+                <div class="col-4 text-center">
+                  <div class="feature-icon">
+                    <i class="fas fa-tractor"></i>
+                  </div>
+                  <small>Agriculture</small>
+                </div>
+                <div class="col-4 text-center">
+                  <div class="feature-icon">
+                    <i class="fas fa-landmark"></i>
+                  </div>
+                  <small>Historical Sites</small>
+                </div>
+                <div class="col-4 text-center">
+                  <div class="feature-icon">
+                    <i class="fas fa-utensils"></i>
+                  </div>
+                  <small>Rich Cuisine</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <div class="province-card">
+            <div class="position-relative">
+              <img src="images/swat.jpg" class="province-img" alt="KPK">
+              <span class="province-badge kpk-badge">Khyber Pakhtunkhwa</span>
+            </div>
+            <div class="province-content">
+              <h3 class="province-title">Khyber Pakhtunkhwa – Gateway to the North</h3>
+              <p>KPK lies in the northwestern region of Pakistan and is famous for its dramatic mountains, valleys, and
+                scenic landscapes. Historically, this region was a key passageway for invaders and traders through the
+                Khyber Pass. Today, it stands as a symbol of courage and hospitality.</p>
+              <div class="row mt-4">
+                <div class="col-4 text-center">
+                  <div class="feature-icon">
+                    <i class="fas fa-mountain"></i>
+                  </div>
+                  <small>Mountains</small>
+                </div>
+                <div class="col-4 text-center">
+                  <div class="feature-icon">
+                    <i class="fas fa-hiking"></i>
+                  </div>
+                  <small>Adventure</small>
+                </div>
+                <div class="col-4 text-center">
+                  <div class="feature-icon">
+                    <i class="fas fa-flag"></i>
+                  </div>
+                  <small>Pashtun Culture</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="province-card">
+            <div class="position-relative">
+              <img src="images/gwader.jpg" class="province-img" alt="Balochistan">
+              <span class="province-badge balochistan-badge">Balochistan</span>
+            </div>
+            <div class="province-content">
+              <h3 class="province-title">Balochistan – Land of Mountains and Minerals</h3>
+              <p>Balochistan is the largest province of Pakistan by area, covering almost 44% of the country. Despite
+                its size, it remains the least populated province. It is rich in natural resources including natural
+                gas, coal, gold, and copper. The terrain is mostly mountainous and desert-like, yet offers stunning
+                views such as the Hingol National Park, Gwadar Port, and the Makran Coastal Highway.</p>
+              <div class="row mt-4">
+                <div class="col-4 text-center">
+                  <div class="feature-icon">
+                    <i class="fas fa-gem"></i>
+                  </div>
+                  <small>Mineral Wealth</small>
+                </div>
+                <div class="col-4 text-center">
+                  <div class="feature-icon">
+                    <i class="fas fa-ship"></i>
+                  </div>
+                  <small>Gwadar Port</small>
+                </div>
+                <div class="col-4 text-center">
+                  <div class="feature-icon">
+                    <i class="fas fa-camera"></i>
+                  </div>
+                  <small>Stunning Views</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="summary-section">
+    <div class="container">
+      <div class="summary-content">
+        <h2>Unity in Diversity</h2>
+        <p>While each province has its own distinct identity, together they form the beautiful tapestry that is
+          Pakistan. From the ancient civilizations of Sindh to the mineral wealth of Balochistan, from the agricultural
+          heartland of Punjab to the majestic mountains of Khyber Pakhtunkhwa - Pakistan's provinces showcase the
+          country's remarkable diversity and unity.</p>
+        <a href="gallery.html" class="btn btn-light mt-3">Explore Provincial Gallery</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="row footer-content">
+        <div class="col-lg-4 mb-4 mb-lg-0">
+          <h5>Explore Pakistan</h5>
+          <p>Your ultimate guide to Pakistan's travel destinations, culture, and heritage.</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+          <div class="footer-links">
+            <h5>Quick Links</h5>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="tourism.html">Destinations</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+          <div class="footer-links">
+            <h5>Explore</h5>
+            <ul>
+              <li><a href="culture.html">Culture</a></li>
+              <li><a href="food.html">Food</a></li>
+              <li><a href="history.html">History</a></li>
+              <li><a href="gallery.html">Gallery</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4">
+          <div class="footer-links">
+            <h5>Newsletter</h5>
+            <p>Subscribe for travel tips and updates</p>
+            <form class="mb-3">
+              <div class="input-group">
+                <input type="email" class="form-control" placeholder="Your email">
+                <button class="btn btn-warning" type="submit">Subscribe</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="copyright">
+        <p class="mb-0">&copy; 2025 Explore Pakistan. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', function () {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Highlight current page in navbar
+    document.addEventListener("DOMContentLoaded", () => {
+      const current = location.pathname.split("/").pop();
+      document.querySelectorAll(".nav-link").forEach(link => {
+        if (link.getAttribute("href") === current) {
+          link.classList.add("active");
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

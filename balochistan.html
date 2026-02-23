@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Balochistan - Explore Pakistan</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #046a38;
+      --secondary-color: #01411c;
+      --accent-color: #f8c537;
+      --text-dark: #333;
+      --text-light: #f8f9fa;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    .top-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 1rem 0;
+      position: relative;
+      z-index: 1020;
+    }
+
+    .top-header h1 {
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      letter-spacing: 1px;
+    }
+
+    .top-header p {
+      font-weight: 300;
+      opacity: 0.9;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .navbar.scrolled {
+      background: rgba(255, 255, 255, 0.98) !important;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      color: var(--primary-color) !important;
+      font-size: 1.5rem;
+    }
+
+    .nav-link {
+      position: relative;
+      color: var(--text-dark) !important;
+      font-weight: 500;
+      margin: 0 5px;
+      padding: 8px 15px !important;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent-color);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-link:hover::before {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-color) !important;
+    }
+
+    .nav-link.active {
+      color: var(--primary-color) !important;
+      font-weight: 600;
+    }
+
+    .nav-link.active::before {
+      transform: scaleX(1);
+    }
+
+    .page-header {
+      /* LOCAL PATH FIXED */
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url('images/balochistan.jpg');
+      background-size: cover;
+      background-position: center;
+      padding: 8rem 0 6rem;
+      color: white;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .page-header h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .page-header p {
+      font-size: 1.5rem;
+      opacity: 0.9;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .content-section {
+      padding: 5rem 0;
+    }
+
+    .section-title {
+      position: relative;
+      padding-bottom: 1rem;
+      margin-bottom: 2rem;
+      color: var(--primary-color);
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 80px;
+      height: 4px;
+      background: var(--accent-color);
+      border-radius: 2px;
+    }
+
+    .feature-card {
+      border: none;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      margin-bottom: 2rem;
+      background: white;
+    }
+
+    .feature-img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .feature-content {
+      padding: 2rem;
+    }
+
+    .feature-title {
+      color: var(--primary-color);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .highlight-box {
+      background-color: rgba(4, 106, 56, 0.1);
+      border-left: 4px solid var(--primary-color);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 0 5px 5px 0;
+    }
+
+    footer {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      padding: 3rem 0 1rem;
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 6rem 0 4rem;
+      }
+
+      .page-header h1 {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="top-header">
+    <div class="container">
+      <h1 class="m-0">Explore Pakistan</h1>
+      <p class="lead m-0">Your Ultimate Travel & Culture Guide</p>
+    </div>
+  </header>
+
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">ExplorePK</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link" href="tourism.html">Tourism</a></li>
+          <li class="nav-item"><a class="nav-link" href="culture.html">Culture</a></li>
+          <li class="nav-item"><a class="nav-link" href="food.html">Food</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" id="provincesDropdown" role="button"
+              data-bs-toggle="dropdown">
+              Provinces
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="sindh.html">Sindh</a></li>
+              <li><a class="dropdown-item" href="punjab.html">Punjab</a></li>
+              <li><a class="dropdown-item" href="kp.html">Khyber Pakhtunkhwa</a></li>
+              <li><a class="dropdown-item active" href="balochistan.html">Balochistan</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="history.html">History</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="page-header">
+    <div class="container">
+      <h1>Balochistan</h1>
+      <p>Land of Mountains, Minerals and Unique Traditions</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h2 class="section-title">Introduction</h2>
+          <p>Balochistan is the largest province of Pakistan by area, covering nearly 44% of the country's landmass.
+            Despite its vastness, it is the least populated province, offering vast deserts, coastal beauty, and rugged
+            mountain ranges. The province is rich in natural resources including natural gas, coal, and minerals, making
+            it economically important for Pakistan.</p>
+
+          <div class="highlight-box">
+            <h4><i class="fas fa-mountain me-2"></i> Geographic Diversity</h4>
+            <p>From the Makran coast to the Sulaiman Mountains, Balochistan offers some of Pakistan's most dramatic
+              landscapes.</p>
+          </div>
+
+          <h2 class="section-title">Historical Importance</h2>
+          <p>Balochistan's strategic location has made it a crossroad of civilizations. It has witnessed migrations,
+            trade routes, and conquests for centuries. The region has remnants of ancient civilizations, including the
+            Mehrgarh archaeological site, one of the oldest settlements in South Asia. Its culture has been preserved
+            through centuries of tribal independence and resilience.</p>
+
+          <div class="row my-5">
+            <div class="col-md-6 mb-4">
+              <div class="feature-card">
+                <img src="images/ruggud.webp" class="feature-img" alt="Balochistan Landscape">
+                <div class="feature-content">
+                  <h3 class="feature-title">Rugged Beauty</h3>
+                  <p>Balochistan's dramatic landscapes range from deserts to coastal areas.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-4">
+              <div class="feature-card">
+                <img src="images/gwader.jpg" class="feature-img" alt="Gwadar Port">
+                <div class="feature-content">
+                  <h3 class="feature-title">Gwadar Port</h3>
+                  <p>Strategic deep-sea port central to CPEC's vision.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h2 class="section-title">Major Cities</h2>
+          <div class="row">
+            <div class="col-md-6">
+              <ul class="list-group list-group-flush mb-4">
+                <li class="list-group-item d-flex align-items-center">
+                  <i class="fas fa-snowflake text-success me-3"></i>
+                  <div>
+                    <h5 class="mb-1">Quetta</h5>
+                    <p class="mb-0 small">Provincial capital known for its fruit orchards and cold weather</p>
+                  </div>
+                </li>
+                <li class="list-group-item d-flex align-items-center">
+                  <i class="fas fa-ship text-success me-3"></i>
+                  <div>
+                    <h5 class="mb-1">Gwadar</h5>
+                    <p class="mb-0 small">Key port city in China-Pakistan Economic Corridor</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <ul class="list-group list-group-flush mb-4">
+                <li class="list-group-item d-flex align-items-center">
+                  <i class="fas fa-university text-success me-3"></i>
+                  <div>
+                    <h5 class="mb-1">Khuzdar</h5>
+                    <p class="mb-0 small">Educational hub with natural beauty</p>
+                  </div>
+                </li>
+                <li class="list-group-item d-flex align-items-center">
+                  <i class="fas fa-music text-success me-3"></i>
+                  <div>
+                    <h5 class="mb-1">Sibi</h5>
+                    <p class="mb-0 small">Famous for its annual cultural mela</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <h2 class="section-title">Culture and Traditions</h2>
+          <p>Balochistan's culture is tribal, hospitable, and deeply rooted in tradition. The Balochi language,
+            traditional dresses, and folk music with instruments like the Saroz and Damboora form the core of cultural
+            life. The people follow a tribal code of honor and celebrate events with poetry, dances, and feasts. Camels
+            are an important part of the rural life and economy.</p>
+
+          <div class="row text-center my-4">
+            <div class="col-6 col-md-3 mb-4">
+              <div class="p-3 rounded-circle bg-success bg-opacity-10 d-inline-block">
+                <i class="fas fa-hands-helping fa-2x text-success"></i>
+              </div>
+              <h5 class="mt-2">Hospitality</h5>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+              <div class="p-3 rounded-circle bg-success bg-opacity-10 d-inline-block">
+                <i class="fas fa-gem fa-2x text-success"></i>
+              </div>
+              <h5 class="mt-2">Mineral Wealth</h5>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+              <div class="p-3 rounded-circle bg-success bg-opacity-10 d-inline-block">
+                <i class="fas fa-camera fa-2x text-success"></i>
+              </div>
+              <h5 class="mt-2">Natural Beauty</h5>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+              <div class="p-3 rounded-circle bg-success bg-opacity-10 d-inline-block">
+                <i class="fas fa-book fa-2x text-success"></i>
+              </div>
+              <h5 class="mt-2">Poetry</h5>
+            </div>
+          </div>
+
+          <h2 class="section-title">Conclusion</h2>
+          <p>Balochistan offers unmatched natural beauty, cultural depth, and economic potential. From its serene
+            beaches to mountain retreats, and from ancient history to modern ports, Balochistan is a hidden gem of
+            Pakistan waiting to be explored.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-dark text-white py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-4 mb-md-0">
+          <h5>Explore Pakistan</h5>
+          <p>Your ultimate guide to Pakistan's travel destinations, culture, and heritage.</p>
+          <div class="social-icons">
+            <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-white"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="col-md-2 mb-4 mb-md-0">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="index.html" class="text-white">Home</a></li>
+            <li><a href="about.html" class="text-white">About</a></li>
+            <li><a href="tourism.html" class="text-white">Destinations</a></li>
+            <li><a href="contact.html" class="text-white">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-2 mb-4 mb-md-0">
+          <h5>Explore</h5>
+          <ul class="list-unstyled">
+            <li><a href="culture.html" class="text-white">Culture</a></li>
+            <li><a href="food.html" class="text-white">Food</a></li>
+            <li><a href="history.html" class="text-white">History</a></li>
+            <li><a href="gallery.html" class="text-white">Gallery</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h5>Newsletter</h5>
+          <p>Subscribe for travel tips and updates</p>
+          <form class="mb-3">
+            <div class="input-group">
+              <input type="email" class="form-control" placeholder="Your email">
+              <button class="btn btn-accent" type="submit">Subscribe</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <hr class="my-4">
+      <div class="text-center">
+        <p class="mb-0">&copy; 2025 Explore Pakistan. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', function () {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Highlight current page in navbar
+    document.addEventListener("DOMContentLoaded", () => {
+      const current = location.pathname.split("/").pop();
+      document.querySelectorAll(".nav-link").forEach(link => {
+        if (link.getAttribute("href") === current) {
+          link.classList.add("active");
+        }
+      });
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>
